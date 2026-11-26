@@ -634,7 +634,7 @@ async function mmCalcularProyeccion() {
 
 function mmProyeccionHTML(r) {
   var filasP = (r.productos || []).map(function (p) {
-    var rango = p.rangoPrecio ? (mmBs(p.rangoPrecio.minimo) + ' a ' + mmBs(p.rangoPrecio.maximo)) : 'sin límite (primer precio)';
+    var rango = p.rangoPrecio ? (mmBs(p.rangoPrecio.minimo) + ' a ' + mmBs(p.rangoPrecio.maximo)) : 'sin límite';
     return '<tr><td>' + mmEsc(p.producto) + '</td><td>' + mmBs(p.precioLista) + '</td><td>' + mmBs(p.precioFacturado) + '</td><td>' + mmBs(p.costoUnitario) + '</td>'
       + '<td style="color:' + (p.margenUnitario < 0 ? 'var(--accent4)' : 'var(--accent5)') + '">' + mmBs(p.margenUnitario) + '</td>'
       + '<td style="color:' + (p.margenContribucionUnitario < 0 ? 'var(--accent4)' : 'var(--accent5)') + '">' + (p.margenContribucionUnitario != null ? mmBs(p.margenContribucionUnitario) : '—') + '</td><td>' + rango + '</td></tr>'

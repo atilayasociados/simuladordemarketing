@@ -1044,7 +1044,7 @@ async function hojaRenderRonda(n, decision, roundState, resultado) {
                   <option value="">— Sin pedido este trimestre —</option>
                   ${ref.proveedores.map(pv =>
                     `<option value="${pv.id}" ${decision.proveedorElegido===pv.id?'selected':''}>
-                      ${pv.nombre} · Costo MP ×${pv.factorCosto ?? 1} · Lead time: ${pv.leadTime} trim. · Lote ${pv.loteMin ?? 0}-${pv.loteMax ?? '∞'}${_textoMP(pv) ? ' · ' + _textoMP(pv) : ''}
+                      ${pv.nombre} · Costo MP ×${pv.factorCosto ?? 1} · Lead time: ${pv.leadTime} trim. · Pedido mínimo ${pv.loteMin ?? 0} unid${_textoMP(pv) ? ' · ' + _textoMP(pv) : ''}
                     </option>`
                   ).join('')}
                 </select>`
@@ -1055,14 +1055,14 @@ async function hojaRenderRonda(n, decision, roundState, resultado) {
           </tr>
           <tr>
             <td class="hoja-label">🛒 Cantidad a pedir (unid MP)</td>
-            <td>${inp('cantidadMPpedida', decision.cantidadMPpedida ?? 0, 'number', 'min="0" step="100"')}</td>
+            <td>${inp('cantidadMPpedida', decision.cantidadMPpedida ?? 0, 'number', 'min="0" step="1"')}</td>
             <td class="hoja-ref">${(() => {
               // Punto (c): ya no se muestra costoAlmacenamientoMP — el motor no lo cobra.
               const _pv = (ref.proveedores || []).find(x => x.id === decision.proveedorElegido);
               if (!_pv) return 'Elegí un proveedor para ver el precio de la MP';
               const _mp = _textoMP(_pv);
               return (_mp ? _mp + ' por unidad de MP (el IVA vuelve como crédito fiscal)<br>' : '')
-                + `<strong>Lote de ${_pv.nombre}: ${_pv.loteMin ?? 0}-${_pv.loteMax ?? '∞'} unid</strong>`;
+                + `<strong>${_pv.nombre}: pedido mínimo ${_pv.loteMin ?? 0} unid, sin máximo</strong>`;
             })()}</td>
             <td style="font-size:.78rem;color:var(--text3)">0 si no vas a pedir. 1 unid MP → ${p.unidadesMPporUnidad ?? 1} unid producidas</td>
           </tr>
